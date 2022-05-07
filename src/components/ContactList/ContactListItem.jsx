@@ -1,30 +1,30 @@
 import PropTypes from "prop-types";
 import { useDeleteContactMutation } from "../../redux/contactsSlice";
-import {
-  ContactListItemStyled,
-  ContactName,
-  ContactNumber,
-  DeleteBtn,
-} from "./ContactList.styled";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col'
 
-export const ContactListItem = ({ id, name, phone }) => {
+export const ContactListItem = ({ id, name, number }) => {
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+  // const [changeContact, { isLoading: isRefreshing }] = useChangeContactMutation();
+  // let switchToUpdatingFields = false;
 
   return (
-    <ContactListItemStyled>
-      <p>
-        <ContactName>{name}:</ContactName>
-        <ContactNumber>{phone}</ContactNumber>
-      </p>
-      <DeleteBtn type="button" onClick={() => deleteContact(id)}>
-        {isDeleting ? "Deleting" : "Delete"}
-      </DeleteBtn>
-    </ContactListItemStyled>
+    <Col xxl={"auto"}>
+    <Card style={{ height: '8rem' }}>
+  <Card.Body>
+    <Card.Title style={{color: "#000"}}>{name}</Card.Title>
+    <Card.Subtitle className="mb-2 text-muted">{number}</Card.Subtitle>
+    <Button variant="outline-dark" size="sm" type="button" style={{marginRight: 10}} onClick={() => deleteContact(id)}>{isDeleting ? "Deleting" : "Delete"}</Button>
+    <Button variant="outline-primary" size="sm" type="button">Update contact</Button>
+  </Card.Body>
+</Card>
+</Col>
   );
 };
 
 ContactListItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
 };

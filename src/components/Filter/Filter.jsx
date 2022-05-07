@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Label, Input } from "../../components/Form/Form.styled";
+import { Form } from "react-bootstrap";
 
 const Filter = ({ value, onFilterChange }) => (
-  <Label htmlFor="filter">
-    Find contacts by name
-    <Input type="text" name="filter" value={value} onChange={onFilterChange} />
-  </Label>
+  <Form.Group className="mb-3" style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
+    <Form.Label htmlFor="filter">Find contacts by name</Form.Label>
+    <Form.Control type="text" name="filter" value={value} onChange={onFilterChange} style={{maxWidth: 300}}  />
+  </Form.Group>
 );
 
 Filter.propTypes = {

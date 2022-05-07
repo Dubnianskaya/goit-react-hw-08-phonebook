@@ -1,20 +1,21 @@
-import { useState, memo } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import Form from "../Form";
-import ContactList from "../ContactList";
-import Filter from "../Filter";
-import { Container, PhonebookTitle, ContactsTitle } from "./App.styled";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import NumberForm from "../components/Form";
+import ContactList from "../components/ContactList";
+import Filter from "../components/Filter";
+import { Title } from "../components/StyledComponentsStyles";
+import {PagesContainer} from './Pages.styled';
 import {
   useFetchContactsQuery,
   useCreateContactMutation,
-} from "../../redux/contactsSlice";
+} from "../redux/contactsSlice";
 
-function App() {
+export const Contacts = () => {
   const { data: contacts, isLoading, isError } = useFetchContactsQuery();
   const [addContact, { isLoading: isAdding }] = useCreateContactMutation();
   const [filter, setFilter] = useState("");
 
-  const formSubmitHandler = ({ name, phone }) => {
+  const formSubmitHandler = ({ name, number }) => {
     const normalizedName = name.toLowerCase();
     const nameFilter = (contact) =>
       normalizedName === contact.name.toLowerCase();
@@ -23,7 +24,7 @@ function App() {
     if (contactSameNameChecked) {
       return toast.error(`${name} is already in contacts`);
     } else {
-      addContact({ name, phone });
+      addContact({ name, number });
     }
   };
 
@@ -39,19 +40,20 @@ function App() {
   };
 
   return (
-    <Container>
-      <PhonebookTitle>Phonebook</PhonebookTitle>
-      <Form onSubmit={formSubmitHandler} adding={isAdding} />
-      <ContactsTitle>Contacts</ContactsTitle>
+    <PagesContainer style={{display: "flex", justifyContent: "space-around", alignItems: "baseline"}}>
+    <div>
+      <Title>Phonebook</Title>
+      <NumberForm onSubmit={formSubmitHandler} adding={isAdding} />
+    </div>
+    <div style={{width: 800}}>
+      <Title>Contacts</Title>
       <Filter value={filter} onFilterChange={changeFilter} />
       <>
         {isError && <h2>Something went wrong :(</h2>}
-        {isLoading && <h2>Loading contacts...</h2>}
+        {isLoading && <h2 style={{textAlign: "center"}}>Loading contacts...</h2>}
         {contacts && <ContactList contactsItems={getVisibleContacts()} />}
       </>
-      <Toaster />
-    </Container>
+    </div>
+    </PagesContainer>
   );
 }
-
-export default memo(App);

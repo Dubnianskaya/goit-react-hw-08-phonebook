@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { ContactsList } from "./ContactList.styled";
+import Row from 'react-bootstrap/Row'
 import { ContactListItem } from "./ContactListItem";
 
 const ContactList = ({ contactsItems }) => (
-  <ContactsList>
+  <Row xxl={"auto"}>
     {contactsItems.map((contact) => (
       <ContactListItem key={contact.id} {...contact} />
     ))}
-  </ContactsList>
+  </Row>
 );
 
 ContactList.propTypes = {
