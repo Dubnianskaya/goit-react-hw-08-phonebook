@@ -9,19 +9,33 @@ import {
   useFetchContactsQuery,
   useCreateContactMutation,
 } from "../redux/contactsSlice";
+import Modal from "../components/ModalForm";
 
 export const Contacts = () => {
   const { data: contacts, isLoading, isError } = useFetchContactsQuery();
   const [addContact, { isLoading: isAdding }] = useCreateContactMutation();
   const [filter, setFilter] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [idForChanging, setIdForChanging] = useState("")
 
-  const formSubmitHandler = ({ name, number }) => {
+  const handleClose = () => setShowModal(false);
+  const handleShow = (id) => {
+    setShowModal(true);
+    setIdForChanging(id);
+  };
+
+  const checkIfContactAlreadyExist = (name) => {
     const normalizedName = name.toLowerCase();
     const nameFilter = (contact) =>
       normalizedName === contact.name.toLowerCase();
     const contactSameNameChecked = contacts.some(nameFilter);
+    return contactSameNameChecked;
+  }
 
-    if (contactSameNameChecked) {
+  const formSubmitHandler = ({ name, number }) => {
+    const nameAlreadyExist = checkIfContactAlreadyExist(name);
+
+    if (nameAlreadyExist) {
       return toast.error(`${name} is already in contacts`);
     } else {
       addContact({ name, number });
@@ -51,9 +65,10 @@ export const Contacts = () => {
       <>
         {isError && <h2>Something went wrong :(</h2>}
         {isLoading && <h2 style={{textAlign: "center"}}>Loading contacts...</h2>}
-        {contacts && <ContactList contactsItems={getVisibleContacts()} />}
+        {contacts && <ContactList contactsItems={getVisibleContacts()} openModal={handleShow} />}
       </>
     </div>
+    <Modal show={showModal} closeModal={handleClose} requestId={idForChanging} isContactExist={checkIfContactAlreadyExist}/>
     </PagesContainer>
   );
 }

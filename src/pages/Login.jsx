@@ -34,7 +34,7 @@ export const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(authOperations.logIn({  email, password }));
+    dispatch(authOperations.logIn({ email, password }));
     reset();
   };
 

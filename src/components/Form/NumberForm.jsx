@@ -2,6 +2,7 @@ import { memo, useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
+import FormInput from "./FormInputs";
 
 function NumberForm({ onSubmit, adding }) {
   const [name, setName] = useState("");
@@ -35,26 +36,7 @@ function NumberForm({ onSubmit, adding }) {
 
   return (
     <Form onSubmit={handleSubmit} style={{display: "flex", justifyContent: "center", flexDirection: "column"}}>
-  <Form.Group className="mb-3">
-    <Form.Label htmlFor="name">Name</Form.Label>
-    <Form.Control type="text"
-          name="name"
-          value={name}
-          onChange={handleInputChange}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required />
-  </Form.Group>
-  <Form.Group className="mb-3">
-    <Form.Label htmlFor="number">Number</Form.Label>
-    <Form.Control type="tel"
-          name="number"
-          value={number}
-          onChange={handleInputChange}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required />
-  </Form.Group>
+      <FormInput name={name} number={number} inputChange={handleInputChange}/>
   <Button type="submit" variant="outline-info">{adding ? "Adding..." : "Add contact"}</Button>
 </Form>
   );

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import Row from 'react-bootstrap/Row'
 import { ContactListItem } from "./ContactListItem";
 
-const ContactList = ({ contactsItems }) => (
+const ContactList = ({ contactsItems, openModal }) => (
   <Row xxl={"auto"}>
     {contactsItems.map((contact) => (
-      <ContactListItem key={contact.id} {...contact} />
+      <ContactListItem key={contact.id} {...contact} openModal={openModal}/>
     ))}
   </Row>
 );
