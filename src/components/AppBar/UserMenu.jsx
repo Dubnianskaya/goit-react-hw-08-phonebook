@@ -6,7 +6,7 @@ import authOperations from '../../redux/auth/auth-operations';
 
 export const UserMenu = () => {
   const dispatch = useDispatch();
-  const mail = useSelector(authSelectors.getUserMail)
+  const mail = useSelector(authSelectors?.getUserMail)
 
    return (
       <>
