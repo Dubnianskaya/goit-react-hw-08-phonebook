@@ -1,27 +1,24 @@
 import { createPortal } from "react-dom";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button';
 import { Form } from "react-bootstrap";
-import { useChangeContactMutation } from "../redux/contactsSlice";
-import FormInput from "./Form/FormInputs";
+import { useChangeContactMutation } from "../../redux/contactsSlice";
+import FormInput from "../Form/FormInputs";
 
 const modalRoot = document.querySelector("#modal-root");
 
-function ModalForm({show, closeModal, requestId, isContactExist}) {
+function ModalForm({show, closeModal, id, changeName, changeNumber, name, number}) {
   const [changeContact, { isLoading: isRefreshing, isSuccess, isError }] = useChangeContactMutation();
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
 
   const handleInputChange = (event) => {
     switch (event.target.name) {
       case "name":
-        setName(event.target.value);
+        changeName(event.target.value);
         break;
 
       case "number":
-        setNumber(event.target.value);
+        changeNumber(event.target.value);
         break;
 
       default:
@@ -29,24 +26,12 @@ function ModalForm({show, closeModal, requestId, isContactExist}) {
     }
   };
 
-  const reset = () => {
-    setName("");
-    setNumber("");
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const nameAlreadyExist = isContactExist(name);
-
-    if (nameAlreadyExist) {
-      return toast.error(`${name} is already in contacts`);
-    } else {
-      changeContact({contactId: requestId, changes: { name, number }})
-      reset();
-      closeModal();
-      isSuccess && toast.success('Contact successfully changed');
-      isError && toast.error('Something went wrong');
-    }
+    changeContact({contactId: id, changes: { name, number }})
+    closeModal();
+    isSuccess && toast.success('Contact successfully changed');
+    isError && toast.error('Something went wrong');
   };
 
     return createPortal(

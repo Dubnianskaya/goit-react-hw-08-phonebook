@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {PagesContainer} from './Pages.styled';
+import {PagesContainer} from '../components/styles/StyledComponentsStyles';
 import { useDispatch } from "react-redux";
 import authOperations from '../redux/auth/auth-operations';
 import {Form} from 'react-bootstrap';

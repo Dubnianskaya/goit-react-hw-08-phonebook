@@ -3,20 +3,22 @@ import toast from "react-hot-toast";
 import NumberForm from "../components/Form";
 import ContactList from "../components/ContactList";
 import Filter from "../components/Filter";
-import { Title } from "../components/StyledComponentsStyles";
-import {PagesContainer} from './Pages.styled';
+import { Title } from "../components/styles/StyledComponentsStyles";
+import {PagesContainer} from '../components/styles/StyledComponentsStyles';
 import {
   useFetchContactsQuery,
   useCreateContactMutation,
 } from "../redux/contactsSlice";
-import Modal from "../components/ModalForm";
+import Modal from "../components/ModalForm/ModalForm";
 
 export const Contacts = () => {
   const { data: contacts, isLoading, isError } = useFetchContactsQuery();
   const [addContact, { isLoading: isAdding }] = useCreateContactMutation();
   const [filter, setFilter] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [idForChanging, setIdForChanging] = useState("")
+  const [idForChanging, setIdForChanging] = useState("");
+  const [modalName, setModalName] = useState("");
+  const [modalNumber, setModalNumber] = useState("");
 
   const handleClose = () => setShowModal(false);
   const handleShow = (id) => {
@@ -65,10 +67,10 @@ export const Contacts = () => {
       <>
         {isError && <h2>Something went wrong :(</h2>}
         {isLoading && <h2 style={{textAlign: "center"}}>Loading contacts...</h2>}
-        {contacts && <ContactList contactsItems={getVisibleContacts()} openModal={handleShow} />}
+        {contacts && <ContactList contactsItems={getVisibleContacts()} openModal={handleShow} changeName={setModalName} changeNumber={setModalNumber}/>}
       </>
     </div>
-    <Modal show={showModal} closeModal={handleClose} requestId={idForChanging} isContactExist={checkIfContactAlreadyExist}/>
+    <Modal show={showModal} closeModal={handleClose} id={idForChanging} changeName={setModalName} changeNumber={setModalNumber} name={modalName} number={modalNumber}/>
     </PagesContainer>
   );
 }

@@ -5,17 +5,22 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 
 
-export const ContactListItem = ({ id, name, number, openModal }) => {
+export const ContactListItem = ({ id, name, number, openModal, setNumberChanges, setNameChanges }) => {
   const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
+  const setModalData = (contactId, contactName, contactNumber) => {
+    openModal(contactId);
+    setNumberChanges(contactNumber);
+    setNameChanges(contactName);
+  }
 
   return (
-    <Col xxl={"auto"}>
-    <Card style={{ height: '8rem', marginTop: 15 }}>
+    <Col>
+    <Card style={{ marginTop: 15 }} bg={'dark'} border="primary">
   <Card.Body>
-    <Card.Title style={{color: "#000"}}>{name}</Card.Title>
+    <Card.Title>{name}</Card.Title>
     <Card.Subtitle className="mb-2 text-muted">{number}</Card.Subtitle>
-    <Button variant="outline-dark" size="sm" type="button" style={{marginRight: 10}} onClick={() => deleteContact(id)}>{isDeleting ? "Deleting" : "Delete"}</Button>
-    <Button variant="outline-primary" size="sm" type="button" onClick={() => openModal(id)}>
+    <Button variant="light" size="sm" type="button" style={{marginRight: 10}} onClick={() => deleteContact(id)}>{isDeleting ? "Deleting" : "Delete"}</Button>
+    <Button variant="primary" size="sm" type="button" onClick={() => setModalData(id,name,number)}>
     Update contact
         </Button>
   </Card.Body>

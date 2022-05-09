@@ -5,8 +5,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { HomePage } from 'pages';
 import { AppBar } from './AppBar/AppBar';
 import { authOperations, authSelectors } from 'redux/auth';
-import PrivateRoute from './PrivateRoute';
-import PublicRoute from './PublicRoute';
+import PrivateRoute from './Routes/PrivateRoute';
+import PublicRoute from './Routes/PublicRoute';
 
 const createChunk = componentName => {
   return lazy(() =>

@@ -3,6 +3,12 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col'
 
+export const Title = styled.h2`
+  font-size: 40px;
+  color: #14aaf5;
+  text-align: center;
+`;
+
 export const PagesContainer = styled.div`
   width: 100%;
   min-height: 100vh;

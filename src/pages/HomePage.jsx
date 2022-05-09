@@ -2,7 +2,7 @@ import React from "react";
 import { LinkContainer } from 'react-router-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col'
-import {PagesContainer, HomePageContainer, HomePageBtn, ColStyled} from './Pages.styled'
+import {PagesContainer, HomePageContainer, HomePageBtn, ColStyled} from '../components/styles/StyledComponentsStyles'
 
 
 export const HomePage = () => {
